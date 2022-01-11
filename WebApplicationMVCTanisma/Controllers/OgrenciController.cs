@@ -37,9 +37,9 @@ namespace WebApplicationMVCTanisma.Controllers
         public ActionResult Guncelle(int id)
         {
             //gelen id>0 ise listede onu bulu Vİew'e gönderecek.
-            if (id>0)
+            if (id > 0)
             {
-                Ogrenci bulunanOgr = Ogrenci.OgrenciListesi.FirstOrDefault(x=>x.Id==id);
+                Ogrenci bulunanOgr = Ogrenci.OgrenciListesi.FirstOrDefault(x => x.Id == id);
                 return View(bulunanOgr);
             }
             return View();
@@ -49,7 +49,7 @@ namespace WebApplicationMVCTanisma.Controllers
         {
             Ogrenci guncellenecekEskiOgr = Ogrenci.OgrenciListesi.FirstOrDefault(x => x.Id == ogr.Id);
 
-            if (guncellenecekEskiOgr!=null)
+            if (guncellenecekEskiOgr != null)
             {
                 ////Öğrenciyi bulduk. Bulunan öğrenciye yeni değerler atanacak.
                 //guncellenecekEskiOgr.Ad = ogr.Ad;
@@ -62,5 +62,34 @@ namespace WebApplicationMVCTanisma.Controllers
 
             return RedirectToAction("Listele");
         }
+
+        [HttpGet]
+        public ActionResult Sil(int id)
+        {
+            var silinecekOgr = Ogrenci.OgrenciListesi.FirstOrDefault(x=> x.Id==id);
+            return View(silinecekOgr);
+        }
+
+        [HttpPost]
+        public ActionResult Sil(Ogrenci ogr)
+        {
+            if (ogr.Id > 0)
+            {
+                Ogrenci.OgrenciListesi.Remove(ogr);
+            }
+            return RedirectToAction("Listele");
+        }
+
+        [HttpPost]
+        public ActionResult Sil2(Ogrenci ogr)
+        {
+            if (ogr.Id>0)
+            {
+                Ogrenci.OgrenciListesi.Remove(ogr);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false, error = "Beklenmedik hata oluştu!" });
+        }
+
     }
 }
