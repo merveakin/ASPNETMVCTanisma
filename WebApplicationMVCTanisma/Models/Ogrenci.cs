@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationMVCTanisma.Models
 {
     public class Ogrenci : IEquatable<Ogrenci>
     {
         public int Id { get; set; }
+        [Required(ErrorMessage ="Öğrenci adı boş geçilemez!")]
+        [StringLength(maximumLength: 20, MinimumLength = 2, ErrorMessage = "Adınız 2 ile 20 karakter aralığında olmalıdır!")]
         public string Ad { get; set; }
+        [Required(ErrorMessage = "Öğrenci soyadı boş geçilemez!")]
+        [StringLength(maximumLength: 20, MinimumLength = 2, ErrorMessage = "Soyadınız 2 ile 20 karakter aralığında olmalıdır!")]
         public string Soyad { get; set; }
-        public DateTime DogumTarihi { get; set; }
+        public DateTime? DogumTarihi { get; set; }
 
         public static List<Ogrenci> OgrenciListesi { get; set; } = new List<Ogrenci>();
 
